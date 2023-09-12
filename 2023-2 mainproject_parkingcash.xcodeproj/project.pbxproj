@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		A4353DED2A8FBD7100970860 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = A4353DEC2A8FBD7100970860 /* main.c */; };
+		A4353DF42A8FBD9600970860 /* programinside.c in Sources */ = {isa = PBXBuildFile; fileRef = A4353DF32A8FBD9600970860 /* programinside.c */; };
+		A4353DF72A8FBEA200970860 /* FileInOut.c in Sources */ = {isa = PBXBuildFile; fileRef = A4353DF62A8FBEA200970860 /* FileInOut.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +27,9 @@
 /* Begin PBXFileReference section */
 		A4353DE92A8FBD7100970860 /* 2023-2 mainproject_parkingcash */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "2023-2 mainproject_parkingcash"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4353DEC2A8FBD7100970860 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		A4353DF32A8FBD9600970860 /* programinside.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = programinside.c; sourceTree = "<group>"; };
+		A4353DF52A8FBDA700970860 /* parkingcash.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = parkingcash.h; sourceTree = "<group>"; };
+		A4353DF62A8FBEA200970860 /* FileInOut.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = FileInOut.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +63,9 @@
 			isa = PBXGroup;
 			children = (
 				A4353DEC2A8FBD7100970860 /* main.c */,
+				A4353DF32A8FBD9600970860 /* programinside.c */,
+				A4353DF52A8FBDA700970860 /* parkingcash.h */,
+				A4353DF62A8FBEA200970860 /* FileInOut.c */,
 			);
 			path = "2023-2 mainproject_parkingcash";
 			sourceTree = "<group>";
@@ -119,6 +127,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A4353DF72A8FBEA200970860 /* FileInOut.c in Sources */,
+				A4353DF42A8FBD9600970860 /* programinside.c in Sources */,
 				A4353DED2A8FBD7100970860 /* main.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
