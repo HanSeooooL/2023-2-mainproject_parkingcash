@@ -19,6 +19,8 @@ char* returntimetoday(void);
 char* returntimetomin(void);
 int Stringtoint(char *str); //문자열 -> 정수변환
 char* substring(char *str, int start, int length); //문자열 부분 자르기(자를 문자열, 시작지점, 길이)
+int checkMaxDayofMonth(int year, int month); //특정 년월의 일수 체크
+int checkParkingdays(char *starttime);    //주차기간 체크
 int checkBill(Parkcar selected); //요금 체크
 
 
@@ -88,40 +90,52 @@ char* returntimetoday(void) {
 }
 
 int checkBill(Parkcar selected) {
-    int res = 0, year, *mon, hour, min;
+    
+    int res = 0, days;
+    
+    days = checkParkingdays(selected.intime);
+    
+    
+    
+    return res;
+}
+
+int checkParkingdays(char *starttime) {
+    int res = -1, year = 0, mon = 0, day = 0, hour = 0, min = 0, hourw = 0, dayw = 0, monw = 0, yearw = 0;
     char* now;
     now = returntimetomin();
-    //년 계산
-    year = Stringtoint(substring(now, YEARINTIME, TIMESECTORLEN)) - Stringtoint(substring(selected.intime, YEARINTIME, TIMESECTORLEN));
-    //월 계산
-    //시작월이 현재 월보다 클 경우
-    if(Stringtoint(substring(now, MONINTIME, TIMESECTORLEN)) < Stringtoint(substring(selected.intime, MONINTIME, TIMESECTORLEN))) {
-        if(Stringtoint(substring(now, YEARINTIME, TIMESECTORLEN)) >
-           Stringtoint(substring(selected.intime, YEARINTIME, TIMESECTORLEN))) {
-            year -= 1;
-            mon = (int*)malloc(sizeof(int) *
-                               (12 - ((Stringtoint(substring(selected.intime, MONINTIME, TIMESECTORLEN)) - Stringtoint(substring(now, MONINTIME, TIMESECTORLEN))))));
-            int j = 0;
-            for(int i = Stringtoint(substring(selected.intime, MONINTIME, TIMESECTORLEN)); i != Stringtoint(substring(now, MONINTIME, TIMESECTORLEN)); i++) {
-                mon[j] = i;
-                j += 1;
-                if(i == 12) i = 0;
-            }
-        }
-        else {
-            printf("잘못된 입력입니다.");
-            exit(1);
-        }
+    
+    //연산
+    //분
+    if(Stringtoint(substring(starttime, MININTIME, TIMESECTORLEN)) > Stringtoint(substring(now, MININTIME,TIMESECTORLEN))) {
+        hourw -= 1;
+        min = (Stringtoint(substring(now, MININTIME, TIMESECTORLEN)) + 60) - Stringtoint(substring(starttime, MININTIME, TIMESECTORLEN));
+    }
+    else min = Stringtoint(substring(now, MININTIME, TIMESECTORLEN)) - Stringtoint(substring(starttime, MININTIME, TIMESECTORLEN));
+    //시
+    if(Stringtoint(substring(starttime, HOURINTIME, TIMESECTORLEN)) > (Stringtoint(substring(now, HOURINTIME, TIMESECTORLEN)) + hourw)) {
+        dayw -= 1;
+        hour = (Stringtoint(substring(now, HOURINTIME, TIMESECTORLEN)) + hourw + 24) -
+        Stringtoint(substring(starttime, HOURINTIME, TIMESECTORLEN));
+    }
+    else hour = (Stringtoint(substring(now, HOURINTIME, TIMESECTORLEN)) + hourw) - Stringtoint(substring(starttime, HOURINTIME, TIMESECTORLEN));
+    
+    //일
+    if(Stringtoint(substring(starttime, DAYINTIME, TIMESECTORLEN)) > Stringtoint(substring(now, DAYINTIME, TIMESECTORLEN)) + dayw) {
+        int monthweight;
+        monw -= 1;
+        monthweight = checkMaxDayofMonth(Stringtoint(substring(now, YEARINTIME, TIMESECTORLEN)), Stringtoint(substring(now, MONINTIME, TIMESECTORLEN)) + monw);
+        day = (Stringtoint(substring(now, DAYINTIME, TIMESECTORLEN)) + dayw + monthweight) -
+        Stringtoint(substring(starttime, DAYINTIME, TIMESECTORLEN));
+    }
+    else day = (Stringtoint(substring(now, DAYINTIME, TIMESECTORLEN)) + dayw) - Stringtoint(substring(starttime, DAYINTIME, TIMESECTORLEN));
+    
+    //월
+    if(Stringtoint(substring(starttime, MONINTIME, TIMESECTORLEN)) > Stringtoint(substring(now, MONINTIME, TIMESECTORLEN)) + monw) {
+        yearw -= 1;
+        
         
     }
-    //시작 월이 현재 월보다 작을 경우
-    else {
-        if(Stringtoint(substring(now, YEARINTIME, TIMESECTORLEN)) >= Stringtoint(substring(selected.intime, YEARINTIME, TIMESECTORLEN))) {
-            
-        }
-    }
-    
-    
     
     return res;
 }
@@ -142,5 +156,28 @@ char* substring(char *str, int start, int length) {
     res = (char*)malloc(sizeof(char) * length + 1);
     strncpy(res, &str[start], length);
     res[length] = '\0';
+    return res;
+}
+
+int checkMaxDayofMonth(int year, int month) {
+    int res = 0;
+    
+    if (month < 8) {
+        if(month % 2 == 1) {
+            res = 31;
+        }
+        else {
+            if(month == 2) {
+                if(year % 4 == 0) res = 29;
+                else res = 28;
+            }
+            else res = 30;
+        }
+    }
+    else {
+        if (month % 2 == 0) res = 30;
+        else res = 31;
+    }
+    
     return res;
 }
